@@ -57,8 +57,9 @@ def today_str():
 
 
 def main():
-    cfg = load_config()
-    feeds = load_rss_sources()
+    cfg = get_config()
+    feeds = get_rss_sources()
+
 
     print("Collecting RSS...")
     raw_articles = collect_from_rss(feeds)
