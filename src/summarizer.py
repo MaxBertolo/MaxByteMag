@@ -3,7 +3,7 @@ from typing import List, Dict
 from dotenv import load_dotenv
 from openai import OpenAI
 from .models import RawArticle
-from .config import LLMConfig
+from .app_config import LLMConfig
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
