@@ -1,12 +1,55 @@
 from pathlib import Path
 from datetime import datetime
 
-from app_config import load_config, load_rss_sources
 from .rss_collector import collect_from_rss
 from .cleaning import clean_articles
 from .summarizer import summarize_articles
 from .report_builder import build_html_report
 from .pdf_export import html_to_pdf
+
+from dataclasses import dataclass
+
+# --- CONFIG HARDCODATA QUI ---
+
+@dataclass
+class LLMConfig:
+    model: str
+    temperature: float
+    max_tokens: int
+    language: str
+
+@dataclass
+class AppConfig:
+    max_articles_per_day: int
+    llm: LLMConfig
+
+
+def get_config() -> AppConfig:
+    # equivalente del tuo config.yaml
+    return AppConfig(
+        max_articles_per_day=10,
+        llm=LLMConfig(
+            model="gpt-4.1-mini",
+            temperature=0.3,
+            max_tokens=600,
+            language="it",
+        ),
+    )
+
+
+def get_rss_sources() -> list[dict]:
+    # equivalente del tuo sources_rss.yaml
+    return [
+        {
+            "name": "TechCrunch AI",
+            "url": "https://techcrunch.com/tag/artificial-intelligence/feed/",
+        },
+        {
+            "name": "The Verge",
+            "url": "https://www.theverge.com/rss/index.xml",
+        },
+    ]
+# --- FINE CONFIG HARDCODATA ---
 
 
 def today_str():
