@@ -1,0 +1,7 @@
+max_articles_per_day: 10
+
+llm:
+  model: "gpt-4.1-mini"
+  temperature: 0.3
+  max_tokens: 600
+  language: "it"
