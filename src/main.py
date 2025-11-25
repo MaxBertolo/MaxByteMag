@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 
-from config import load_config, load_rss_sources
+from app_config import load_config, load_rss_sources
 from .rss_collector import collect_from_rss
 from .cleaning import clean_articles
 from .summarizer import summarize_articles
