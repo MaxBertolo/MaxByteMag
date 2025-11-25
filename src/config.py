@@ -2,7 +2,7 @@ import yaml
 from dataclasses import dataclass
 from pathlib import Path
 
-# Directory di base del progetto (la root del repo)
+# BASE_DIR = root del repo (cartella che contiene src/, config/, ecc.)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -20,17 +20,16 @@ class AppConfig:
     llm: LLMConfig
 
 
-def load_config(path: str | None = None) -> AppConfig:
+def load_config() -> AppConfig:
     """
     Carica config.yaml usando un percorso assoluto,
-    indipendente dalla cartella da cui viene lanciato Python.
+    così non dipende da dove viene lanciato Python.
     """
-    if path is None:
-        config_path = BASE_DIR / "config" / "config.yaml"
-    else:
-        config_path = (BASE_DIR / path).resolve()
+    config_path = BASE_DIR / "config" / "config.yaml"
+    print("[DEBUG] Loading config from:", config_path)
 
-    print("Loading config from:", config_path)  # debug nei log di Actions
+    if not config_path.exists():
+        raise FileNotFoundError(f"Config file not found at {config_path}")
 
     with open(config_path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
@@ -48,13 +47,17 @@ def load_config(path: str | None = None) -> AppConfig:
     )
 
 
-def load_rss_sources(path: str = "config/sources_rss.yaml"):
+def load_rss_sources() -> list[dict]:
     """
     Carica sources_rss.yaml usando un percorso assoluto.
     """
-    rss_path = (BASE_DIR / path).resolve()
-    print("Loading RSS sources from:", rss_path)  # debug
+    rss_path = BASE_DIR / "config" / "sources_rss.yaml"
+    print("[DEBUG] Loading RSS sources from:", rss_path)
+
+    if not rss_path.exists():
+        raise FileNotFoundError(f"RSS sources file not found at {rss_path}")
 
     with open(rss_path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
+
     return data["feeds"]
