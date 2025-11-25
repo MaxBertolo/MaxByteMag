@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 
-from app_config import load_app_config, load_rss_sources
+from app_config import load_config, load_rss_sources
 from .rss_collector import collect_from_rss
 from .cleaning import clean_articles
 from .summarizer import summarize_articles
@@ -14,7 +14,7 @@ def today_str():
 
 
 def main():
-    cfg = load_app_config()
+    cfg = load_config()
     feeds = load_rss_sources()
 
     print("Collecting RSS...")
