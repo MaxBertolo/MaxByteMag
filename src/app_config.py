@@ -60,3 +60,4 @@ def load_rss_sources() -> list[dict]:
         data = yaml.safe_load(f)
 
     return data["feeds"]
+
